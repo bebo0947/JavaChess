@@ -5,13 +5,17 @@ import java.util.HashMap;
 
 public class Board {
 	
-	public static void print(Object o) {
+	public static void println(Object o) {
 		System.out.println(o);
+	}
+	public static void print(Object o) {
+		System.out.print(o);
 	}
 	
 	public HashMap<String, ArrayList<Piece>> discriminated;
 	public ArrayList<Piece> pieces;
 	public Piece[][] board;
+	public String turn;
 	
 	private String[] colours = {"black", "white"};
 	
@@ -19,16 +23,33 @@ public class Board {
 		this.loadPieces();
 		this.board = new Piece[8][8];
 		this.placePiece();
+		this.turn = "white";
 	}
 	
 	private void placePiece() {
 		for (Piece piece: this.pieces) {
-			print(piece.position);
 			int[] pos = Piece.l2C(piece.position);
-			print(pos);
 			this.board[pos[0] - 1][pos[1] - 1] = piece;
 		}
 		
+	}
+	
+	public void move(Piece piece, String loc) {
+		assert this.pieces.contains(piece);
+		assert piece.getPossMoves(this).contains(loc);
+		Piece thing = this.getAtLoc(loc);
+		if (thing.equals(null)) {
+			
+		}
+	}
+	
+	private Piece getAtLoc(int[] loc) {
+		return this.board[loc[0]][loc[1]];
+	}
+	
+	private Piece getAtLoc(String loc) {
+		int[] loc2 = Piece.l2C(loc);
+		return this.getAtLoc(loc2);
 	}
 
 	private void loadPieces() {
@@ -48,11 +69,7 @@ public class Board {
 		}
 		this.pieces = fin.get("black");
 		for (Piece piece: fin.get("white")) { this.pieces.add(piece); }
-		this.discriminated = fin;		
-		
-		for (Piece piece: this.pieces) {
-			print(piece);
-		}
+		this.discriminated = fin;
 	}
 	
 	public static void main(String[] args) {

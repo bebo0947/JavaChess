@@ -28,7 +28,9 @@ public class Bishop extends Piece{
 			for (int column: delta) {
 				for (int num: numbers) {
 					int[] newLoc = {curr[0] + num*row, curr[1] + num* column};
-					Piece atLoc = board.board[newLoc[0]][newLoc[1]];
+					if (!(0 <= newLoc[0] && newLoc[0] <= 7 && 0 <= newLoc[1] && newLoc[1] <= 7)) {
+						break;
+					} Piece atLoc = board.board[newLoc[0]][newLoc[1]];
 					if (atLoc.equals(null)) {
 						// Either there is nothing there or whats there can be eaten
 						this.possLocs.add(c2L(newLoc));
