@@ -1,4 +1,4 @@
-package Chess;
+package Chess.JavaChess;
 
 import java.util.ArrayList;
 
@@ -20,8 +20,35 @@ public class Knight extends Piece{
 
 	@Override
 	public ArrayList<String> getPossMoves(Board board) {
-		// TODO Auto-generated method stub
-		return null;
+		this.possLocs = new ArrayList<>();
+		int[] curr = l2C(this.position);
+		int[] dub = {2, -2};
+		int[] sin = {1, -1};
+		for (int horizontal: dub) {
+			for (int vertical: sin) {
+				int[] newLoc = {curr[0] + horizontal, curr[1] + vertical};
+				if ((0 <= newLoc[0] && newLoc[0] <= 7 && 0 <= newLoc[1] && newLoc[1] <= 7)) {
+					Piece atLoc = board.board[newLoc[0]][newLoc[1]];
+					if (atLoc == null || ! atLoc.colour.equals(this.colour)) {
+						// Either there is nothing there or whats there can be eaten
+						possLocs.add(c2L(newLoc));
+					}
+				} 
+			}
+		} for (int horizontal: sin) {
+			for (int vertical: dub) {
+				int[] newLoc = {curr[0] + horizontal, curr[1] + vertical};
+				if ((0 <= newLoc[0] && newLoc[0] <= 7 && 0 <= newLoc[1] && newLoc[1] <= 7)) {
+					Piece atLoc = board.board[newLoc[0]][newLoc[1]];
+					if (atLoc == null || ! atLoc.colour.equals(this.colour)) {
+						// Either there is nothing there or whats there can be eaten
+						possLocs.add(c2L(newLoc));
+					}
+				} 
+			}
+		}
+		
+		return this.possLocs;
 	}
 
 }

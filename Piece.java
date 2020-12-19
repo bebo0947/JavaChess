@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 public abstract class Piece {
 	
+	public final int[] delta = {-1, 0, 1};
+	
 	public final String colour;
 	public String position;
 	public String type;
@@ -40,10 +42,10 @@ public abstract class Piece {
 	
 	/**
 	 * Convert from coordinate to Chess position
-	 * @param pos coordinate
+	 * @param pos coordi nate
 	 * @return chess position in form of letter number
 	 */
-	public static String l2C(int[] pos) {
+	public static String c2L(int[] pos) {
 		char letter = (char) (pos[0] + 65);
 		String num = "" + (9 - pos[1]);
 		return letter + num;
@@ -54,9 +56,9 @@ public abstract class Piece {
 	 * @param pos chess position in form of letter number
 	 * @return coordinate
 	 */
-	public static int[] c2L(String pos) {
-		int letter = ((int) pos.charAt(0)) - 65;
-		int num = 9 - (int) pos.charAt(1);
+	public static int[] l2C(String pos) {
+		int letter = (int) pos.charAt(0) - 65;
+		int num = (int) pos.charAt(1) - 49;
 		int[] thing = {letter, num};
 		return thing;
 	}
@@ -64,13 +66,7 @@ public abstract class Piece {
 	@Override
 	public String toString() {
 		String fin = "";
-		fin = "" + this.colour + " " + this.type + " at position " + this.position;
+		fin = "" + this.colour.toUpperCase().charAt(0) + this.type.toUpperCase().charAt(0);
 		return fin;		
-	}
-	
-	public static void main(String[] args) {
-		int[] pos = {5, 4};
-		System.out.println(Piece.l2C(pos));
-		System.out.print(c2L("A1"));
 	}
 }

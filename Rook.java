@@ -1,4 +1,4 @@
-package Chess;
+package Chess.JavaChess;
 
 import java.util.ArrayList;
 
@@ -20,8 +20,51 @@ public class Rook extends Piece{
 
 	@Override
 	public ArrayList<String> getPossMoves(Board board) {
-		// TODO Auto-generated method stub
-		return null;
+		this.possLocs = new ArrayList<>();
+		int[] numbers = {1, 2, 3, 4 , 5, 6, 7};
+		int[] curr = l2C(this.position);
+		int[] delta = {-1, 1};
+		for (int row: delta) {
+			for (int num: numbers) {
+				int[] newLoc = {curr[0] + num * row, curr[1]};
+				if (!(0 <= newLoc[0] && newLoc[0] <= 7 && 0 <= newLoc[1] && newLoc[1] <= 7)) {
+					break;
+				} Piece atLoc = board.board[newLoc[0]][newLoc[1]];
+				if (atLoc.equals(null)) {
+					// Either there is nothing there or whats there can be eaten
+					this.possLocs.add(c2L(newLoc));
+				} else if (! atLoc.colour.equals(this.colour)) {
+					// Either there is nothing there or whats there can be eaten
+					this.possLocs.add(c2L(newLoc));
+					break;
+				} else if (atLoc.colour.equals(this.colour)) {
+					// Either there is nothing there or whats there can be eaten
+					break;
+				}
+			}
+		}
+		
+		for (int column: delta) {
+			for (int num: numbers) {
+				int[] newLoc = {curr[0], curr[1] + num * column};
+				if (!(0 <= newLoc[0] && newLoc[0] <= 7 && 0 <= newLoc[1] && newLoc[1] <= 7)) {
+					break;
+				} Piece atLoc = board.board[newLoc[0]][newLoc[1]];
+				if (atLoc.equals(null)) {
+					// Either there is nothing there or whats there can be eaten
+					this.possLocs.add(c2L(newLoc));
+				} else if (! atLoc.colour.equals(this.colour)) {
+					// Either there is nothing there or whats there can be eaten
+					this.possLocs.add(c2L(newLoc));
+					break;
+				} else if (atLoc.colour.equals(this.colour)) {
+					// Either there is nothing there or whats there can be eaten
+					break;
+				}
+			}
+		}
+		
+		return this.possLocs;
 	}
 
 }
