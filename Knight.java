@@ -1,4 +1,4 @@
-package Chess;
+package Chess.JavaChess;
 
 import java.util.ArrayList;
 
@@ -20,8 +20,7 @@ public class Knight extends Piece{
 
 	@Override
 	public ArrayList<String> getPossMoves(Board board) {
-		// TODO Auto-generated method stub
-		return null;
+		this.po
 	}
 
 }

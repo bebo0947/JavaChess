@@ -1,4 +1,4 @@
-package Chess;
+package Chess.JavaChess;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,7 +24,7 @@ public class Board {
 	private void placePiece() {
 		for (Piece piece: this.pieces) {
 			print(piece.position);
-			int[] pos = Piece.c2L(piece.position);
+			int[] pos = Piece.l2C(piece.position);
 			print(pos);
 			this.board[pos[0] - 1][pos[1] - 1] = piece;
 		}
