@@ -67,6 +67,7 @@ public class GUI extends Application{
 							b.setText("" + selectedPiece);
 							selectedBtn = null;
 							selectedPiece = null;
+							potMoves = new ArrayList<>();
 						}
 					}
 				};
@@ -118,7 +119,16 @@ public class GUI extends Application{
 		// Looks like im gonna have to reconstruct the gridpane, scene and stage every time :) yay
 		
 		if (this.selectedBtn == null) {
-			
+			for (int i = 0; i < 8; i++) {
+				for (int j = 0; j < 8; j++) {
+					Button but = (Button) getFromGrid(pane, i, j);
+
+					but.setPrefSize(60, 60);
+					
+					if ((i + j) % 2 == 1) {	but.setStyle("-fx-background-color: #000000");;}
+					else {but.setStyle("-fx-background-color: #FFFFFF");}
+				}
+			}
 		} else {
 			Piece p = this.butts.get(this.selectedBtn);
 			assert p.colour == board.turn;
