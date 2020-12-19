@@ -66,7 +66,7 @@ public abstract class Piece {
 	@Override
 	public String toString() {
 		String fin = "";
-		fin = "" + this.colour + " " + this.type + " at position " + this.position;
+		fin = "" + this.colour.toUpperCase().charAt(0) + this.type.toUpperCase().charAt(0);
 		return fin;		
 	}
 }

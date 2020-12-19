@@ -29,7 +29,7 @@ public class Board {
 	private void placePiece() {
 		for (Piece piece: this.pieces) {
 			int[] pos = Piece.l2C(piece.position);
-			this.board[pos[0] - 1][pos[1] - 1] = piece;
+			this.board[pos[0]][pos[1]] = piece;
 		}
 		
 	}
@@ -63,7 +63,7 @@ public class Board {
 				fin.get(colour).add(new Bishop(colour, i));
 				fin.get(colour).add(new Knight(colour, i));
 				fin.get(colour).add(new Rook(colour, i));
-			} for (int i = 0; i < 4; i++) {
+			} for (int i = 0; i < 8; i++) {
 				fin.get(colour).add(new Pawn(colour, i));
 			}
 		}
