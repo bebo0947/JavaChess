@@ -20,7 +20,31 @@ public class Knight extends Piece{
 
 	@Override
 	public ArrayList<String> getPossMoves(Board board) {
-		this.po
+		this.possLocs = new ArrayList<>();
+		int[] curr = l2C(this.position);
+		int[] dub = {2, -2};
+		int[] sin = {1, -1};
+		for (int horizontal: dub) {
+			for (int vertical: sin) {
+				int[] newLoc = {curr[0] + horizontal, curr[1] + vertical};
+				Piece atLoc = board.board[newLoc[0]][newLoc[1]];
+				if (atLoc.equals(null) || ! atLoc.colour.equals(this.colour)) {
+					// Either there is nothing there or whats there can be eaten
+					possLocs.add(c2L(newLoc));
+				}
+			}
+		} for (int horizontal: sin) {
+			for (int vertical: dub) {
+				int[] newLoc = {curr[0] + horizontal, curr[1] + vertical};
+				Piece atLoc = board.board[newLoc[0]][newLoc[1]];
+				if (atLoc.equals(null) || ! atLoc.colour.equals(this.colour)) {
+					// Either there is nothing there or whats there can be eaten
+					possLocs.add(c2L(newLoc));
+				}
+			}
+		}
+		
+		return this.possLocs;
 	}
 
 }
