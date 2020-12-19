@@ -34,12 +34,31 @@ public class Board {
 		
 	}
 	
-	public void move(Piece piece, String loc) {
+	public void move(Piece piece, int[] loc) {
 		assert this.pieces.contains(piece);
-		assert piece.getPossMoves(this).contains(loc);
+		assert piece.getPossMoves(this).contains(Piece.c2L(loc));
 		Piece thing = this.getAtLoc(loc);
-		if (thing.equals(null)) {
-			
+		int[] currLoc = Piece.l2C(piece.position);
+		if (thing == null) {
+			this.board[currLoc[0]][currLoc[1]] = null;
+			this.board[loc[0]][loc[1]] = piece;
+			piece.position = Piece.c2L(loc);
+			this.switchTurns();
+		} else if (!(thing.colour == piece.colour)) {
+			this.pieces.remove(thing);
+			this.discriminated.get(thing.colour).remove(thing);
+			this.board[currLoc[0]][currLoc[1]] = null;
+			this.board[loc[0]][loc[1]] = piece;
+			piece.position = Piece.c2L(loc);
+			this.switchTurns();
+		}
+	} 
+	
+	private void switchTurns() {
+		if (this.turn == "white") {
+			this.turn = "black";
+		} else if (this.turn == "black") {
+			this.turn = "white";
 		}
 	}
 	

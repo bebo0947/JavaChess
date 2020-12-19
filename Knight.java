@@ -27,24 +27,24 @@ public class Knight extends Piece{
 		for (int horizontal: dub) {
 			for (int vertical: sin) {
 				int[] newLoc = {curr[0] + horizontal, curr[1] + vertical};
-				if (!(0 <= newLoc[0] && newLoc[0] <= 7 && 0 <= newLoc[1] && newLoc[1] <= 7)) {
-					break;
-				} Piece atLoc = board.board[newLoc[0]][newLoc[1]];
-				if (atLoc.equals(null) || ! atLoc.colour.equals(this.colour)) {
-					// Either there is nothing there or whats there can be eaten
-					possLocs.add(c2L(newLoc));
-				}
+				if ((0 <= newLoc[0] && newLoc[0] <= 7 && 0 <= newLoc[1] && newLoc[1] <= 7)) {
+					Piece atLoc = board.board[newLoc[0]][newLoc[1]];
+					if (atLoc == null || ! atLoc.colour.equals(this.colour)) {
+						// Either there is nothing there or whats there can be eaten
+						possLocs.add(c2L(newLoc));
+					}
+				} 
 			}
 		} for (int horizontal: sin) {
 			for (int vertical: dub) {
 				int[] newLoc = {curr[0] + horizontal, curr[1] + vertical};
-				if (!(0 <= newLoc[0] && newLoc[0] <= 7 && 0 <= newLoc[1] && newLoc[1] <= 7)) {
-					break;
-				} Piece atLoc = board.board[newLoc[0]][newLoc[1]];
-				if (atLoc.equals(null) || ! atLoc.colour.equals(this.colour)) {
-					// Either there is nothing there or whats there can be eaten
-					possLocs.add(c2L(newLoc));
-				}
+				if ((0 <= newLoc[0] && newLoc[0] <= 7 && 0 <= newLoc[1] && newLoc[1] <= 7)) {
+					Piece atLoc = board.board[newLoc[0]][newLoc[1]];
+					if (atLoc == null || ! atLoc.colour.equals(this.colour)) {
+						// Either there is nothing there or whats there can be eaten
+						possLocs.add(c2L(newLoc));
+					}
+				} 
 			}
 		}
 		

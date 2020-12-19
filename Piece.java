@@ -42,7 +42,7 @@ public abstract class Piece {
 	
 	/**
 	 * Convert from coordinate to Chess position
-	 * @param pos coordinate
+	 * @param pos coordi nate
 	 * @return chess position in form of letter number
 	 */
 	public static String c2L(int[] pos) {

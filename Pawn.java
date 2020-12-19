@@ -31,22 +31,20 @@ public class Pawn extends Piece{
 		this.possLocs = new ArrayList<>();
 		if (0 == curr[1] || curr[1] == 8) {
 			return this.possLocs;
-		}
+		} Board.println(hasMoved);
 		if (this.colour.equals("black")) {
-			int[] first = {curr[0], curr[1] - 1};
+			int[] first = {curr[0] + 1, curr[1]};
 			this.possLocs.add(c2L(first));
 			if (! this.hasMoved) {
-				int[] second = {curr[0], curr[1] - 2};
+				int[] second = {curr[0] + 2, curr[1]};
 				this.possLocs.add(c2L(second));
-				this.hasMoved = true;
 			}
 		} else if (this.colour.equals("white")) {
-			int[] first = {curr[0], curr[1] + 1};
+			int[] first = {curr[0] - 1, curr[1]};
 			this.possLocs.add(c2L(first));
 			if (! this.hasMoved) {
-				int[] second = {curr[0], curr[1] + 2};
+				int[] second = {curr[0] - 2, curr[1]};
 				this.possLocs.add(c2L(second));
-				this.hasMoved = true;
 			}
 		} return this.possLocs;
 	}

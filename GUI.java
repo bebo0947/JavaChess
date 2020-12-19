@@ -4,9 +4,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javafx.application.Application;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -18,19 +20,21 @@ public class GUI extends Application{
 
 	public HashMap<Button, Piece> butts = new HashMap<>();
 	public HashMap<Piece, Button> Pieces = new HashMap<>();
-	public Button selected = null;
+	public Button selectedBtn = null;
+	public Piece selectedPiece = null;
+	public ArrayList<Button> potMoves = new ArrayList<>();
 	
 	@Override
 	public void start(Stage stage) throws Exception {
 		Board board = new Board();
 		
-		this.setUp(stage, board);
+		GridPane pane = this.setUp(stage, board);
 		
 				
 		
 	}
 	
-	private void setUp(Stage stage, Board board) {
+	private GridPane setUp(Stage stage, Board board) {
 		
 		GridPane boardDisplay = new GridPane();
 		
@@ -52,21 +56,29 @@ public class GUI extends Application{
 
 						System.out.println("" + p);
 						
-						if (p.colour.equals(board.turn)) {
-							selected = b;
-							Update(stage, board);
-						}	
+						if (!(p == null) && p.colour.equals(board.turn)) {
+							selectedBtn = b;
+							selectedPiece = butts.get(b);
+							Update(stage, board, boardDisplay);
+						} else if (potMoves.contains(b)){
+							int[] origin = getFromGrid(boardDisplay, selectedBtn);
+							board.move(selectedPiece, origin);
+							selectedBtn.setText("");
+							b.setText("" + selectedPiece);
+							selectedBtn = null;
+							selectedPiece = null;
+						}
 					}
 				};
 				
-				boardDisplay.add(temp, i, j);
+				boardDisplay.add(temp, j, i);
 				
 				if (!(piece == null)) {
 					temp.setText("" + piece);
-					temp.setOnAction(update);
-					this.butts.put(temp, piece);
-					this.Pieces.put(piece, temp);
 				}
+				temp.setOnAction(update);
+				this.butts.put(temp, piece);
+				this.Pieces.put(piece, temp);
 			}
 		}
 		
@@ -77,17 +89,38 @@ public class GUI extends Application{
 		stage.setTitle("The Most Beautiful Chess Game");
 		stage.setScene(scene);
 		stage.show();
+		
+		return boardDisplay;
 	}
 	
-	public void Update(Stage stage, Board board) {
+	public Node getFromGrid(GridPane pane, int i, int j) {
+		for (Node node : pane.getChildren()) {
+	        if (GridPane.getColumnIndex(node) == j && GridPane.getRowIndex(node) == i) {
+	            return node;
+	        }
+	    }
+	    return null;
+	}
+	
+	public int[] getFromGrid(GridPane pane, Button btn) {
+		for (Node node : pane.getChildren()) {
+	        if ((Button) node == btn) {
+	        	int[] thing = {GridPane.getColumnIndex(node), GridPane.getRowIndex(node)};
+	            return thing;
+	        }
+	    }
+	    return null;
+	}
+	
+	public void Update(Stage stage, Board board, GridPane pane) {
 		System.out.println("thing");
 		
 		// Looks like im gonna have to reconstruct the gridpane, scene and stage every time :) yay
 		
-		if (this.selected == null) {
+		if (this.selectedBtn == null) {
 			
 		} else {
-			Piece p = this.butts.get(this.selected);
+			Piece p = this.butts.get(this.selectedBtn);
 			assert p.colour == board.turn;
 			for (int i = 0; i < 8; i++) {
 				for (int j = 0; j < 8; j++) {
@@ -95,20 +128,22 @@ public class GUI extends Application{
 					int[] loc = {i, j};
 					String locs = Piece.c2L(loc);
 					
-
+					Button but = (Button) getFromGrid(pane, i, j);
+					/*
 					Button temp = new Button();
 					if (this.Pieces.containsKey(piece)) {
 						temp = Pieces.get(piece);
 					}
+					*/
 					
-					temp.setPrefSize(60, 60);
+					but.setPrefSize(60, 60);
 					
-					if ((i + j) % 2 == 1) {	temp.setStyle("-fx-background-color: #000000");;}
-					else {temp.setStyle("-fx-background-color: #FFFFFF");}
+					if ((i + j) % 2 == 1) {	but.setStyle("-fx-background-color: #000000");;}
+					else {but.setStyle("-fx-background-color: #FFFFFF");}
 
-					if ( butts.get(selected).getPossMoves(board).contains(locs)) {
-						temp.setStyle("-fx-background-color: #FFFF00"); 
-						System.out.println("In Danger");
+					if ( butts.get(selectedBtn).getPossMoves(board).contains(locs)) {
+						but.setStyle("-fx-background-color: #FFFF00");
+						potMoves.add(but);
 					}
 					
 				}
