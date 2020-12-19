@@ -55,9 +55,28 @@ public abstract class Piece {
 	 * @return coordinate
 	 */
 	public static int[] c2L(String pos) {
-		int letter = ((int) pos.charAt(0)) - 65;
-		int num = 9 - (int) pos.charAt(1);
-		int[] thing = {letter, num};
+		char letter = pos.charAt(0);
+		int first;
+		if (letter == 'A') {
+			first = 0;
+		} else if (letter == 'B') {
+			first = 1;
+		} else if (letter == 'C') {
+			first = 2;
+		} else if (letter == 'D') {
+			first = 3;
+		} else if (letter == 'E') {
+			first = 4;
+		} else if (letter == 'F') {
+			first = 5;
+		} else if (letter == 'G') {
+			first = 6;
+		} else {
+			first = 7;
+		}
+		
+		int num = (int) pos.charAt(1) - 49;
+		int[] thing = {first, num};
 		return thing;
 	}
 	
@@ -71,6 +90,9 @@ public abstract class Piece {
 	public static void main(String[] args) {
 		int[] pos = {5, 4};
 		System.out.println(Piece.l2C(pos));
-		System.out.print(c2L("A1"));
+		int[] thing = c2L("A1");
+		for (int t: thing) {
+			Board.print(t);
+		}
 	}
 }
